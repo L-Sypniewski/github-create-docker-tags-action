@@ -1,0 +1,9 @@
+name: 'Github Create Docker tags action'
+description: 'Create Docker tags for images to be pushed to a repository'
+author: 'Łukasz Sypniewski'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'git-merge'  
+  color: 'purple'
