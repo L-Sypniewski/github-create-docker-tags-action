@@ -45,6 +45,8 @@ TAGS_TO_ADD=""
 
 [ $use_git_tag == "true" ] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_FROM_GIT_TAG"
 
+# Trim commas
+TAGS_TO_ADD=$(echo $TAGS_TO_ADD  | sed 's/^[,]*//;s/[,]*$//') 
 
 # Print created tags
 echo "*** Created variables ***"
