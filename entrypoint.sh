@@ -41,7 +41,7 @@ TAG_FROM_GIT_TAG="$IMAGE_ID:$VERSION_FROM_GIT_TAG"
 TAG_LATEST="$IMAGE_ID:$LATEST_VERSION"
 TAGS_TO_ADD=""
 [ $add_latest_tag == "true" ] && TAGS_TO_ADD="$TAG_LATEST"
-[[ ! -z "$VERSION_FROM_INPUT" ]] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_CUSTOM"          
+[[ ! -z "$custom_version" ]] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_CUSTOM"          
 
 [ $use_git_tag == "true" ] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_FROM_GIT_TAG"
 
@@ -49,7 +49,7 @@ TAGS_TO_ADD=""
 # Print created tags
 echo "*** Created variables ***"
 echo IMAGE_ID=$IMAGE_ID
-echo VERSION_FROM_INPUT=$VERSION_FROM_INPUT
+echo CUSTOM_VERSION=$custom_version
 echo VERSION_FROM_GIT_TAG=$VERSION_FROM_GIT_TAG
 echo LATEST_VERSION=$LATEST_VERSION
 echo TAG_CUSTOM=$TAG_CUSTOM
