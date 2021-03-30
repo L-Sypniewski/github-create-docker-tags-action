@@ -8,7 +8,8 @@ current_git_tag=${CURRENT_GIT_TAG}
 custom_version=${CUSTOM_VERSION}
 add_latest_tag=${ADD_LATEST_TAG:-true}
 use_git_tag=${USE_GIT_TAG:-false}
-repo_owner=${REPO_OWNER}
+project_name=${PROJECT_NAME}
+domain=${DOMAIN:-"ghcr.io"}
 
 # Print config
 echo "*** CONFIGURATION ***"
@@ -17,11 +18,12 @@ echo -e "\tCURRENT_GIT_TAG: ${current_git_tag}"
 echo -e "\tCUSTOM_VERSION: ${custom_version}"
 echo -e "\tADD_LATEST_TAG: ${add_latest_tag}"
 echo -e "\tUSE_GIT_TAG: ${use_git_tag}"
-echo -e "\tREPO_OWNER: ${repo_owner}"
+echo -e "\tPROJECT_NAME: ${project_name}"
+echo -e "\tDOMAIN: ${domain}"
 
 echo "Preparing Docker tags for repository"
           
-IMAGE_ID=ghcr.io/$repo_owner/$image_name
+IMAGE_ID=$domain/$project_name/$image_name
 
 # Change all uppercase to lowercase
 IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
