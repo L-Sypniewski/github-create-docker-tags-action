@@ -36,11 +36,13 @@ VERSION_FROM_GIT_TAG=$(echo $current_git_tag | sed -e 's/^v//')
 # Use Docker `latest` tag convention
 LATEST_VERSION="latest"
 
-TAG_CUSTOM="$IMAGE_ID:${custom_version}${custom_suffix}"
+[ ! -z "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_version}-${custom_suffix}"
+[ -z "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_version}"
 
 TAG_WITH_SUFFIX="$IMAGE_ID:${custom_suffix}"
 
-TAG_FROM_GIT_TAG="$IMAGE_ID:${VERSION_FROM_GIT_TAG}${custom_suffix}"
+[ ! -z "$custom_suffix" ]  && TAG_FROM_GIT_TAG="$IMAGE_ID:${VERSION_FROM_GIT_TAG}-${custom_suffix}"
+[ -z "$custom_suffix" ]  && TAG_FROM_GIT_TAG="$IMAGE_ID:${VERSION_FROM_GIT_TAG}"
 
 TAG_LATEST="$IMAGE_ID:$LATEST_VERSION"
 TAGS_TO_ADD=""
