@@ -7,7 +7,7 @@ set -o pipefail
 # config
 image_name=$IMAGE_NAME
 current_git_tag=${CURRENT_GIT_TAG}
-custom_version=${CUSTOM_VERSION}
+custom_docker_tag=${CUSTOM_DOCKER_TAG}
 add_latest_tag=${ADD_LATEST_TAG:-true}
 use_git_tag=${USE_GIT_TAG:-false}
 project_name=${PROJECT_NAME}
@@ -18,7 +18,7 @@ domain=${DOMAIN:-"ghcr.io"}
 echo "*** CONFIGURATION ***"
 echo -e "\tIMAGE_NAME: ${image_name}"
 echo -e "\tCURRENT_GIT_TAG: ${current_git_tag}"
-echo -e "\tCUSTOM_VERSION: ${custom_version}"
+echo -e "\tCUSTOM_DOCKER_TAG: ${custom_docker_tag}"
 echo -e "\tADD_LATEST_TAG: ${add_latest_tag}"
 echo -e "\tUSE_GIT_TAG: ${use_git_tag}"
 echo -e "\tPROJECT_NAME: ${project_name}"
@@ -38,8 +38,8 @@ VERSION_FROM_GIT_TAG=$(echo "$current_git_tag" | sed -e 's/^v//')
 # Use Docker `latest` tag convention
 LATEST_VERSION="latest"
 
-[ -n "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_version}-${custom_suffix}"
-[ -z "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_version}"
+[ -n "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_docker_tag}-${custom_suffix}"
+[ -z "$custom_suffix" ]  && TAG_CUSTOM="$IMAGE_ID:${custom_docker_tag}"
 
 TAG_WITH_SUFFIX="$IMAGE_ID:${custom_suffix}"
 
@@ -49,7 +49,7 @@ TAG_WITH_SUFFIX="$IMAGE_ID:${custom_suffix}"
 TAG_LATEST="$IMAGE_ID:$LATEST_VERSION"
 TAGS_TO_ADD=""
 [ "$add_latest_tag" == "true" ] && TAGS_TO_ADD="$TAG_LATEST"
-[[ -n "$custom_version" ]] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_CUSTOM"   
+[[ -n "$custom_docker_tag" ]] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_CUSTOM"   
 [[ -n "$custom_suffix" ]] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_WITH_SUFFIX"          
 [ "$use_git_tag" == "true" ] && TAGS_TO_ADD="$TAGS_TO_ADD,$TAG_FROM_GIT_TAG"
 
@@ -59,7 +59,7 @@ TAGS_TO_ADD=$(echo "$TAGS_TO_ADD"  | sed 's/^[,]*//;s/[,]*$//')
 # Print created tags
 echo "*** Created variables ***"
 echo IMAGE_ID="$IMAGE_ID"
-echo CUSTOM_VERSION="$custom_version"
+echo CUSTOM_DOCKER_TAG="$custom_docker_tag"
 echo VERSION_FROM_GIT_TAG="$VERSION_FROM_GIT_TAG"
 echo LATEST_VERSION=$LATEST_VERSION
 echo TAG_CUSTOM="$TAG_CUSTOM"
